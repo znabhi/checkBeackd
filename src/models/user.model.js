@@ -31,15 +31,15 @@ const userSchema = new Schema(
         ref: "Video",
       },
     ],
-    avatar: {
-      type: String, // cloudnary
-      required: false,
-    },
-    coverImg: {
-      type: String, // cloudnary
-            required: false,
+    // avatar: {
+    //   type: String, // cloudnary
+    //   required: false,
+    // },
+    // coverImg: {
+    //   type: String, // cloudnary
+    //         required: false,
 
-    },
+    // },
     refreshToken: {
       type: String,
     },
