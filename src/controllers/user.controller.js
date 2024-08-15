@@ -101,22 +101,22 @@ const registerUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, createdUser, "User Succesfully Registered!!!"));
 });
 
-const generateAccessTokenAndRefreshToken = async (userId) => {
-  try {
-    const user = await User.findById(userId);
-    const accessToken = user.generateAccessToken();
-    const refreshToken = user.generateRefreshToken();
-    user.refreshToken = refreshToken;
-    await user.save({ validateBeforeSave: false });
+// const generateAccessTokenAndRefreshToken = async (userId) => {
+//   try {
+//     const user = await User.findById(userId);
+//     const accessToken = user.generateAccessToken();
+//     const refreshToken = user.generateRefreshToken();
+//     user.refreshToken = refreshToken;
+//     await user.save({ validateBeforeSave: false });
 
-    return { accessToken, refreshToken };
-  } catch (error) {
-    throw new ApiError(
-      408,
-      "Something went wrong While generating Access & referesh token"
-    );
-  }
-};
+//     return { accessToken, refreshToken };
+//   } catch (error) {
+//     throw new ApiError(
+//       408,
+//       "Something went wrong While generating Access & referesh token"
+//     );
+//   }
+// };
 
 const loggedInUser = asyncHandler(async (req, res) => {
   /**------what do we want while login
@@ -150,24 +150,24 @@ const loggedInUser = asyncHandler(async (req, res) => {
     throw new ApiError(401, "invalid user credentials");
   }
 
-  const { accessToken, refreshToken } =
-    await generateAccessTokenAndRefreshToken(user._id);
+  // const { accessToken, refreshToken } =
+  //   await generateAccessTokenAndRefreshToken(user._id);
 
   const logInUser = await User.findById(user._id).select(
-    "-password -refreshToken"
+    "-password"
   );
+    // .cookie("accessToken", accessToken, options)
+    // .cookie("refreshToken", refreshToken, options)
 
   return res
     .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
     .json(
       new ApiResponse(
         200,
         {
           user: logInUser,
-          accessToken,
-          refreshToken,
+          // accessToken,
+          // refreshToken,
         },
         "user Successfully login"
       )
