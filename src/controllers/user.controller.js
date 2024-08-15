@@ -162,12 +162,12 @@ const loggedInUser = asyncHandler(async (req, res) => {
   if (!user) {
     throw new ApiError(404, "There have no any account created by this email");
   }
-  const isPasswordValid = await user.isPasswordCorrect(password);
+  // const isPasswordValid = await user.isPasswordCorrect(password);
   // console.log(isPasswordValid);
 
-  if (!isPasswordValid) {
-    throw new ApiError(401, "invalid user credentials");
-  }
+  // if (!isPasswordValid) {
+  //   throw new ApiError(401, "invalid user credentials");
+  // }
 
   // const { accessToken, refreshToken } =
   //   await generateAccessTokenAndRefreshToken(user._id);
