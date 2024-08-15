@@ -112,7 +112,7 @@ const generateAccessTokenAndRefreshToken = async (userId) => {
     return { accessToken, refreshToken };
   } catch (error) {
     throw new ApiError(
-      409,
+      408,
       "Something went wrong While generating Access & referesh token"
     );
   }
