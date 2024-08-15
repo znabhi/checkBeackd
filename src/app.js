@@ -8,7 +8,8 @@ const app = express();
 // Middleware for CORS
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN, // Allow requests from specified origin
+    origin: ['https://checkbeackd.onrender.com'], // Allow requests from specified origin
+    methods:['GET','POST'],
     credentials: true, // Allow sending cookies
   })
 );
