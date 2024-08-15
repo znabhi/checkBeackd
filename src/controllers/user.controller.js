@@ -101,22 +101,37 @@ const registerUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, createdUser, "User Succesfully Registered!!!"));
 });
 
-const generateAccessTokenAndRefreshToken = async (userId) => {
-  try {
-    const user = await User.findById(userId);
-    const accessToken = user.generateAccessToken();
-    const refreshToken = user.generateRefreshToken();
-    user.refreshToken = refreshToken;
-    await user.save({ validateBeforeSave: false });
+// const generateAccessTokenAndRefreshToken = async (userId) => {
+//   try {
+//     const user = await User.findById(userId);
+//     const accessToken = user.generateAccessToken();
+//     const refreshToken = user.generateRefreshToken();
+//     user.refreshToken = refreshToken;
+//     await user.save({ validateBeforeSave: false });
 
-    return { accessToken, refreshToken };
-  } catch (error) {
-    throw new ApiError(
-      500,
-      "Something went wrong While generating Access & referesh token"
-    );
-  }
+//     return { accessToken, refreshToken };
+//   } catch (error) {
+//     throw new ApiError(
+//       500,
+//       "Something went wrong While generating Access & referesh token"
+//     );
+//   }
+// };
+
+const generateAccessTokenAndRefreshToken = async (userId) => {
+    try {
+        const user = await User.findById(userId);
+        const accessToken = user.generateAccessToken();
+        const refreshToken = user.generateRefreshToken();
+        user.refreshToken = refreshToken;
+        await user.save({ validateBeforeSave: false });
+        return { accessToken, refreshToken };
+    } catch (error) {
+        console.error('Token generation error:', error); // Log the error
+        throw new ApiError(500, "Error generating tokens");
+    }
 };
+
 
 // const loggedInUser = asyncHandler(async (req, res) => {
 //   /**------what do we want while login
